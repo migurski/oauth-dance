@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>OAuth Dance</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css">
+</head>
+<body>
+    <form action="/authorize" method="post">
+        <p>
+            <label for="key">Key</label>
+            <input type="text" name="key" placeholder="key">
+        </p>
+        <p>
+            <label for="secret">Secret</label>
+            <input type="text" name="secret" placeholder="secret">
+        </p>
+        <p>
+            <button name="provider" value="github" type="submit">Authorize Github</button>
+            <button name="provider" value="twitter" type="submit">Authorize Twitter</button>
+        </p>
+    </form>
+
+    <h2>Github OAuth</h2>
+    <p>
+        New application:<br>
+        <a href="https://github.com/settings/applications/new">https://github.com/settings/applications/new</a>
+    </p>
+    <p>
+        Authorization callback URL:<br>
+        <code>{{callback_url}}</code>
+    </p>
+    
+    <h2>Twitter OAuth</h2>
+    <p>
+        New application:<br>
+        <a href="https://apps.twitter.com/app/new">https://apps.twitter.com/app/new</a>
+    </p>
+    <p>
+        Callback URL:<br>
+        <code>{{callback_url}}</code>
+    </p>
+</body>
+</html>

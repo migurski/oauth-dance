@@ -1,0 +1,30 @@
+html
+{
+    font-size: 24px;
+}
+
+form label,
+form input,
+form button
+{
+    font-size: 1rem;
+}
+
+form label[for=key],
+form label[for=secret]
+{
+    display: inline-block;
+    width: 4rem;
+}
+
+form input[type=text]
+{
+    display: inline-block;
+    width: 20rem;
+}
+
+form input[type=text],
+form button
+{
+    padding: .2rem .5rem;
+}

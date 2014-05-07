@@ -1,0 +1,4 @@
+Flask>=0.10.1
+oauth2>=1.5.211
+requests>=2.2.1
+gunicorn>=18.0
