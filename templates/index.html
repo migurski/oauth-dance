@@ -42,6 +42,24 @@
         <a href="static/github-app.png">Sample Github app screenshot</a>.
     </p>
     
+    {% if host == '127.0.0.1:5000' %}
+        <form action="/authorize" method="post">
+            <p>
+                <input type="hidden" name="key" value="4949d934f1da777dcfb9">
+                <input type="hidden" name="secret" value="12842261ecb07d4abe328e8361739fd51dd169ba">
+                <button name="provider" value="github" type="submit">JFDI</button>
+            </p>
+        </form>
+    {% elif host == 'oauth-dance.herokuapp.com' %}
+        <form action="/authorize" method="post">
+            <p>
+                <input type="hidden" name="key" value="aa1f054f836ab5f2a54b">
+                <input type="hidden" name="secret" value="84458662d6a114de39e5a3ec5c8b92912824d6cf">
+                <button name="provider" value="github" type="submit">JFDI</button>
+            </p>
+        </form>
+    {% endif %}
+    
     <h2>Twitter OAuth</h2>
     <p>
         New application:<br>
@@ -55,11 +73,29 @@
         <a href="static/twitter-app.png">Sample Twitter app screenshot</a>.
     </p>
     
+    {% if host == '127.0.0.1:5000' %}
+        <form action="/authorize" method="post">
+            <p>
+                <input type="hidden" name="key" value="3tAboWZ2ZolF1B3XvVWrZUkJj">
+                <input type="hidden" name="secret" value="kO4OdfxmZp9HMzyNTevLjAoOXlc5UYOVYcVPuWcv1uy4W8B94I">
+                <button name="provider" value="twitter" type="submit">JFDI</button>
+            </p>
+        </form>
+    {% elif host == 'oauth-dance.herokuapp.com' %}
+        <form action="/authorize" method="post">
+            <p>
+                <input type="hidden" name="key" value="fJn26dnS2QY4KD5VD42YxHEjt">
+                <input type="hidden" name="secret" value="HZUzuvtO8W6zeWbAHuxSl6wocxs4et19bFVR8Kq6CRk0TEDiUT">
+                <button name="provider" value="twitter" type="submit">JFDI</button>
+            </p>
+        </form>
+    {% endif %}
+    
     <h2>Google OAuth</h2>
     <p>
         New application:<br>
         <a href="https://console.developers.google.com/project">https://console.developers.google.com/project</a><br>
-        Set up OAuth 2.0 under <i>APIs &amp; auth → Credentials</i>.
+        <q>Create New Client ID</q> under <i>APIs &amp; auth → Credentials</i>.
     </p>
     <p>
         OAuth documentation:<br>
@@ -68,6 +104,24 @@
     <p>
         <a href="static/google-app.png">Sample Google app screenshot</a>.
     </p>
+    
+    {% if host == '127.0.0.1:5000' %}
+        <form action="/authorize" method="post">
+            <p>
+                <input type="hidden" name="key" value="656808925171-0db1to95unmk66hkqmnlljhrj8ofj0ce.apps.googleusercontent.com">
+                <input type="hidden" name="secret" value="ZqSrok49lcVh5xyUFJI4cGHf">
+                <button name="provider" value="google" type="submit">JFDI</button>
+            </p>
+        </form>
+    {% elif host == 'oauth-dance.herokuapp.com' %}
+        <form action="/authorize" method="post">
+            <p>
+                <input type="hidden" name="key" value="622386048115-8re9rvfl7ald5o60chdijant2qhf5cj1.apps.googleusercontent.com">
+                <input type="hidden" name="secret" value="mHB8cLJ219X6dLipw1Erg1Ue">
+                <button name="provider" value="google" type="submit">JFDI</button>
+            </p>
+        </form>
+    {% endif %}
 
     <hr>
 

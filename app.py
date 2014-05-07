@@ -26,7 +26,7 @@ def index():
     '''
     '''
     callback_url = '{0}://{1}/callback'.format(request.scheme, request.host)
-    return render_template('index.html', callback_url=callback_url)
+    return render_template('index.html', callback_url=callback_url, host=request.host)
 
 @app.route('/authorize', methods=['POST'])
 def authorize():
