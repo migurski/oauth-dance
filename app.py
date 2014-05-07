@@ -37,11 +37,16 @@ def authorize():
     elif provider == 'twitter':
         return authorize_twitter(key, secret)
     
+    elif provider == 'google':
+        return authorize_google(key, secret, callback, str(uuid4()))
+    
     else:
         raise Exception()
 
 @app.route('/callback')
 def callback():
+    callback = '{0}://{1}/callback'.format(request.scheme, request.host)
+
     if session['provider'] == 'github':
         args = (session['client_id'], session['client_secret'],
                 request.args.get('code'), request.args.get('state'))
@@ -54,6 +59,16 @@ def callback():
                 request.args.get('oauth_verifier'))
 
         return callback_twitter(*args)
+    
+    elif session['provider'] == 'google':
+        args = (session['client_id'], session['client_secret'],
+                request.args.get('code'), request.args.get('state'),
+                callback)
+
+        return callback_google(*args)
+    
+    else:
+        raise Exception()
 
 def authorize_github(client_id, client_secret, redirect_uri, state):
     '''
@@ -89,6 +104,20 @@ def authorize_twitter(consumer_key, consumer_secret):
     query_string = urlencode(dict(oauth_token=oauth_token))
     
     return redirect(twitter_authorize_url + '?' + query_string)
+
+def authorize_google(client_id, client_secret, redirect_uri, state):
+    '''
+    '''
+    session['provider'] = 'google'
+    session['client_id'] = client_id
+    session['client_secret'] = client_secret
+    session['state'] = state
+    
+    query_string = urlencode(dict(client_id=client_id, redirect_uri=redirect_uri,
+                                  scope='profile', state=state, response_type='code',
+                                  access_type='offline', approval_prompt='force'))
+    
+    return redirect('https://accounts.google.com/o/oauth2/auth' + '?' + query_string)
 
 def callback_github(client_id, client_secret, code, state):
     '''
@@ -134,6 +163,25 @@ def callback_twitter(consumer_key, consumer_secret, oauth_token, oauth_token_sec
     
     return jsonify(dict(consumer_key=consumer_key, consumer_secret=consumer_secret,
                         oauth_token=oauth_token, oauth_token_secret=oauth_token_secret))
+
+def callback_google(client_id, client_secret, code, state, redirect_uri):
+    '''
+    '''
+    if state != session['state']:
+        raise Exception()
+    
+    data = dict(client_id=client_id, client_secret=client_secret,
+                code=code, redirect_uri=redirect_uri,
+                grant_type='authorization_code')
+    
+    resp = post('https://accounts.google.com/o/oauth2/token', data=data)
+    access = json.loads(resp.content)
+    access_token, token_type = access['access_token'], access['token_type']
+    refresh_token = access['refresh_token']
+    
+    return jsonify(dict(client_id=client_id, client_secret=client_secret,
+                        access_token=access_token, token_type=token_type,
+                        refresh_token=refresh_token))
 
 if __name__ == '__main__':
     app.run(debug=True)

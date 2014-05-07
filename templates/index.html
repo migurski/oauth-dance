@@ -20,17 +20,26 @@
         <p>
             <button name="provider" value="github" type="submit">Authorize Github</button>
             <button name="provider" value="twitter" type="submit">Authorize Twitter</button>
+            <button name="provider" value="google" type="submit">Authorize Google</button>
         </p>
     </form>
 
+    <h3>Callback URL</h3>
+    <p>
+        <code>{{callback_url}}</code>
+    </p>
+    
     <h2>Github OAuth</h2>
     <p>
         New application:<br>
         <a href="https://github.com/settings/applications/new">https://github.com/settings/applications/new</a>
     </p>
     <p>
-        Authorization callback URL:<br>
-        <code>{{callback_url}}</code>
+        OAuth documentation:<br>
+        <a href="https://developer.github.com/v3/oauth/">https://developer.github.com/v3/oauth/</a>
+    </p>
+    <p>
+        Github calls it an <q>Authorization callback URL</q>.
     </p>
     
     <h2>Twitter OAuth</h2>
@@ -39,8 +48,25 @@
         <a href="https://apps.twitter.com/app/new">https://apps.twitter.com/app/new</a>
     </p>
     <p>
-        Callback URL:<br>
-        <code>{{callback_url}}</code>
+        OAuth documentation:<br>
+        <a href="https://dev.twitter.com/docs/auth/oauth">https://dev.twitter.com/docs/auth/oauth</a>
+    </p>
+    <p>
+        Twitter calls it a <q>Callback URL</q>.
+    </p>
+    
+    <h2>Google OAuth</h2>
+    <p>
+        New application:<br>
+        <a href="https://console.developers.google.com/project">https://console.developers.google.com/project</a><br>
+        Set up OAuth 2.0 under <i>APIs &amp; auth → Credentials</i>.
+    </p>
+    <p>
+        OAuth documentation:<br>
+        <a href="https://developers.google.com/accounts/docs/OAuth2">https://developers.google.com/accounts/docs/OAuth2</a>
+    </p>
+    <p>
+        Google calls it a <q>Redirect URI</q>.
     </p>
 
     <hr>
