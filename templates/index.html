@@ -6,9 +6,15 @@
     <link rel="stylesheet" type="text/css" href="static/style.css">
 </head>
 <body>
-    <h1>Dance The OAuth Dance</h1>
+    <form action="/authorize" method="post" id="main">
+        <h1>Dance The OAuth Dance</h1>
+    
+        <p>
+            Doing the <a href="http://oauth.net">OAuth dance</a> can be an
+            incredible pain <br>when you just need to get data out of an API.
+            <br>Let us dance the dance on your behalf.
+        </p>
 
-    <form action="/authorize" method="post">
         <p>
             <label for="key">Key</label>
             <input type="text" name="key" placeholder="key">
@@ -18,18 +24,21 @@
             <input type="text" name="secret" placeholder="secret">
         </p>
         <p>
-            <button name="provider" value="github" type="submit">Authorize Github</button>
-            <button name="provider" value="twitter" type="submit">Authorize Twitter</button>
-            <button name="provider" value="google" type="submit">Authorize Google</button>
+            <label for="provider">Authorize</label>
+            <button name="provider" value="github" type="submit">Go Github</button>
+            <button name="provider" value="twitter" type="submit">Go Twitter</button>
+            <button name="provider" value="google" type="submit">Go Google</button>
+        </p>
+
+        <h3>Callback URL</h3>
+        <p>
+            <code>{{callback_url}}</code>
         </p>
     </form>
 
-    <h3>Callback URL</h3>
-    <p>
-        <code>{{callback_url}}</code>
-    </p>
-    
-    <h2>Github OAuth</h2>
+    <hr>
+
+    <h2>Github</h2>
     <p>
         New application:<br>
         <a href="https://github.com/settings/applications/new">https://github.com/settings/applications/new</a>
@@ -60,7 +69,7 @@
         </form>
     {% endif %}
     
-    <h2>Twitter OAuth</h2>
+    <h2>Twitter</h2>
     <p>
         New application:<br>
         <a href="https://apps.twitter.com/app/new">https://apps.twitter.com/app/new</a>
@@ -91,7 +100,7 @@
         </form>
     {% endif %}
     
-    <h2>Google OAuth</h2>
+    <h2>Google</h2>
     <p>
         New application:<br>
         <a href="https://console.developers.google.com/project">https://console.developers.google.com/project</a><br>
