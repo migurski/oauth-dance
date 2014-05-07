@@ -15,6 +15,9 @@ twitter_authorize_url = 'https://api.twitter.com/oauth/authorize'
 twitter_request_token_url = 'https://api.twitter.com/oauth/request_token'
 twitter_access_token_url = 'https://api.twitter.com/oauth/access_token'
 
+google_authorize_url = 'https://accounts.google.com/o/oauth2/auth'
+google_access_token_url = 'https://accounts.google.com/o/oauth2/token'
+
 app = Flask(__name__)
 app.secret_key = 'fake'
 
@@ -117,7 +120,7 @@ def authorize_google(client_id, client_secret, redirect_uri, state):
                                   scope='profile', state=state, response_type='code',
                                   access_type='offline', approval_prompt='force'))
     
-    return redirect('https://accounts.google.com/o/oauth2/auth' + '?' + query_string)
+    return redirect(google_authorize_url + '?' + query_string)
 
 def callback_github(client_id, client_secret, code, state):
     '''
@@ -174,7 +177,7 @@ def callback_google(client_id, client_secret, code, state, redirect_uri):
                 code=code, redirect_uri=redirect_uri,
                 grant_type='authorization_code')
     
-    resp = post('https://accounts.google.com/o/oauth2/token', data=data)
+    resp = post(google_access_token_url, data=data)
     access = json.loads(resp.content)
     access_token, token_type = access['access_token'], access['token_type']
     refresh_token = access['refresh_token']
