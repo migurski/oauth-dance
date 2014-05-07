@@ -4,6 +4,9 @@ html
     font-size: 18px;
 }
 
+body { margin: 2em }
+h1, h2, h3, p { margin: 0 0 1.5rem 0 }
+
 form#main
 {
     font-size: 25px;
@@ -20,9 +23,7 @@ form button
     font-size: 1em;
 }
 
-form label[for=key],
-form label[for=secret],
-form label[for=provider]
+form label
 {
     display: inline-block;
     width: 5em;
@@ -37,5 +38,5 @@ form input[type=text]
 form input[type=text],
 form button
 {
-    padding: .2em .5em;
+    padding: .3em .7em;
 }
