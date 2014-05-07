@@ -1,30 +1,41 @@
 html
 {
-    font-size: 24px;
+    font-family: Georgia, sans-serif;
+    font-size: 18px;
 }
+
+form#main
+{
+    font-size: 25px;
+}
+
+h1 { font-size: 2.0em }
+h2 { font-size: 1.4em }
+h3 { font-size: 1.0em }
 
 form label,
 form input,
 form button
 {
-    font-size: 1rem;
+    font-size: 1em;
 }
 
 form label[for=key],
-form label[for=secret]
+form label[for=secret],
+form label[for=provider]
 {
     display: inline-block;
-    width: 4rem;
+    width: 5em;
 }
 
 form input[type=text]
 {
     display: inline-block;
-    width: 20rem;
+    width: 20em;
 }
 
 form input[type=text],
 form button
 {
-    padding: .2rem .5rem;
+    padding: .2em .5em;
 }
