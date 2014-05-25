@@ -28,6 +28,7 @@
             <button name="provider" value="github" type="submit">Go Github</button>
             <button name="provider" value="twitter" type="submit">Go Twitter</button>
             <button name="provider" value="google" type="submit">Go Google</button>
+            <button name="provider" value="heroku" type="submit">Go Heroku</button>
         </p>
 
         <h3>How To</h3>
@@ -142,6 +143,40 @@
                 <button name="provider" value="google" type="submit">JFDI</button>
             </p>
         </form>
+    {% endif %}
+    
+    <h2>Heroku</h2>
+    <p>
+        New application:<br>
+        <a href="https://dashboard.heroku.com/account">https://dashboard.heroku.com/account</a><br>
+        <q>Register API Client</q> under <i>API Clients</i>.
+    </p>
+    <p>
+        OAuth documentation:<br>
+        <a href="https://devcenter.heroku.com/articles/oauth">https://devcenter.heroku.com/articles/oauth</a>
+    </p>
+    <p>
+        <a href="static/heroku-app.png">Sample Heroku app screenshot</a>.
+    </p>
+    
+    {% if host == '127.0.0.1:5000' %}
+        <form action="/authorize" method="post">
+            <p>
+                <input type="hidden" name="key" value="7a12d323-b21e-4d40-b9ee-b51c40b5bcc6">
+                <input type="hidden" name="secret" value="d907bf7e-314c-4f6d-a54c-ed9f85717b23">
+                <button name="provider" value="heroku" type="submit">JFDI</button>
+            </p>
+        </form>
+    {% elif host == 'oauth-dance.herokuapp.com' %}
+        <!--
+        <form action="/authorize" method="post">
+            <p>
+                <input type="hidden" name="key" value="">
+                <input type="hidden" name="secret" value="">
+                <button name="provider" value="heroku" type="submit">JFDI</button>
+            </p>
+        </form>
+        -->
     {% endif %}
 
     <hr>

@@ -18,6 +18,9 @@ twitter_access_token_url = 'https://api.twitter.com/oauth/access_token'
 google_authorize_url = 'https://accounts.google.com/o/oauth2/auth'
 google_access_token_url = 'https://accounts.google.com/o/oauth2/token'
 
+heroku_authorize_url = 'https://id.heroku.com/oauth/authorize'
+heroku_access_token_url = 'https://id.heroku.com/oauth/token'
+
 app = Flask(__name__)
 app.secret_key = 'fake'
 
@@ -42,6 +45,9 @@ def authorize():
     
     elif provider == 'google':
         return authorize_google(key, secret, callback, str(uuid4()))
+    
+    elif provider == 'heroku':
+        return authorize_heroku(key, secret, callback, str(uuid4()))
     
     else:
         raise Exception()
@@ -69,6 +75,12 @@ def callback():
                 callback)
 
         return callback_google(*args)
+    
+    elif session['provider'] == 'heroku':
+        args = (session['client_id'], session['client_secret'],
+                request.args.get('code'), request.args.get('state'))
+
+        return callback_heroku(*args)
     
     else:
         raise Exception()
@@ -121,6 +133,19 @@ def authorize_google(client_id, client_secret, redirect_uri, state):
                                   access_type='offline', approval_prompt='force'))
     
     return redirect(google_authorize_url + '?' + query_string)
+
+def authorize_heroku(client_id, client_secret, redirect_uri, state):
+    '''
+    '''
+    session['provider'] = 'heroku'
+    session['client_id'] = client_id
+    session['client_secret'] = client_secret
+    session['state'] = state
+    
+    query_string = urlencode(dict(client_id=client_id, redirect_uri=redirect_uri,
+                                  response_type='code', scope='global', state=state))
+    
+    return redirect(heroku_authorize_url + '?' + query_string)
 
 def callback_github(client_id, client_secret, code, state):
     '''
@@ -185,6 +210,24 @@ def callback_google(client_id, client_secret, code, state, redirect_uri):
     return jsonify(dict(client_id=client_id, client_secret=client_secret,
                         access_token=access_token, token_type=token_type,
                         refresh_token=refresh_token))
+
+def callback_heroku(client_id, client_secret, code, state):
+    '''
+    '''
+    if state != session['state']:
+        raise Exception()
+
+    data = dict(grant_type='authorization_code', client_secret=client_secret,
+                code=code, redirect_uri='')
+    
+    resp = post(heroku_access_token_url, data=data)
+    access = json.loads(resp.content)
+    access_token, token_type = access['access_token'], access['token_type']
+    refresh_token, session_nonce = access['refresh_token'], access['session_nonce']
+    
+    return jsonify(dict(client_id=client_id, client_secret=client_secret,
+                        access_token=access_token, token_type=token_type,
+                        refresh_token=refresh_token, session_nonce=session_nonce))
 
 if __name__ == '__main__':
     app.run(debug=True)
